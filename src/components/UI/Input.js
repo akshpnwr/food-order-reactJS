@@ -1,7 +1,6 @@
 import classes from './Input.module.css';
 
 const Input = (props) => {
-  console.log(props.input.id);
   return (
     <div className={classes.input}>
       <label htmlFor={props.input.id}>{props.label}</label>
