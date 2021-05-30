@@ -4,19 +4,24 @@ import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 
 function App() {
-  const [cart, setCart] = useState(null);
+  const [cartIsShown, setCartIsShown] = useState(false);
 
   const cartButtonHandler = () => {
-    setCart(<Cart />);
+    setCartIsShown(true);
+  };
+
+  const cartCloseHandler = () => {
+    console.log('closed');
+    setCartIsShown(false);
   };
 
   return (
     <Fragment>
+      {cartIsShown ? <Cart closed={cartCloseHandler} /> : null}
       <Header clicked={cartButtonHandler} />
       <main>
         <Meals />
       </main>
-      {cart}
     </Fragment>
   );
 }
