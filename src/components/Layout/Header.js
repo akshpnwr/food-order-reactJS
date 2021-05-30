@@ -7,7 +7,7 @@ const Header = (props) => {
     <Fragment>
       <header className={classes.header}>
         <h1>React meals</h1>
-        <HeaderCartButton clicked={props.clicked} closed={props.closed}>
+        <HeaderCartButton clicked={props.onShowCart}>
           Your cart
         </HeaderCartButton>
       </header>

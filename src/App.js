@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { React, Fragment, useState } from 'react';
 import Cart from './components/Cart/Cart';
 import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
@@ -6,19 +6,18 @@ import Meals from './components/Meals/Meals';
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
 
-  const cartButtonHandler = () => {
+  const showCartHandler = () => {
     setCartIsShown(true);
   };
 
-  const cartCloseHandler = () => {
-    console.log('closed');
+  const closeCartHandler = () => {
     setCartIsShown(false);
   };
 
   return (
     <Fragment>
-      {cartIsShown ? <Cart closed={cartCloseHandler} /> : null}
-      <Header clicked={cartButtonHandler} />
+      {cartIsShown ? <Cart onCloseCart={closeCartHandler} /> : null}
+      <Header onShowCart={showCartHandler} />
       <main>
         <Meals />
       </main>
