@@ -1,8 +1,6 @@
 import classes from './CartItem.module.css';
 
 const CartItem = (props) => {
-  console.log(props);
-
   return (
     <li className={classes['cart-item']}>
       <div>
@@ -13,28 +11,8 @@ const CartItem = (props) => {
         </div>
       </div>
       <div className={classes.actions}>
-        <button
-          onClick={() =>
-            props.onRemove({
-              id: props.id,
-            })
-          }
-        >
-          -
-        </button>
-        <button
-          onClick={() =>
-            props.onAdd({
-              id: props.id,
-              name: props.name,
-              price: props.price,
-              amount: props.amount,
-              description: props.description,
-            })
-          }
-        >
-          +
-        </button>
+        <button onClick={props.onRemove}>-</button>
+        <button onClick={props.onAdd}>+</button>
       </div>
     </li>
   );
