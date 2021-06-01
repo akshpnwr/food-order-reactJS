@@ -46,7 +46,10 @@ const cartReducer = (state, action) => {
     let updatedTotalAmount =
       Number(state.totalAmount.toFixed(2)) - updatedItems[index].price;
 
-    updatedItems.splice(index, 1);
+    if (updatedItems[index].amount === 1) updatedItems.splice(index, 1);
+    else {
+      updatedItems[index].amount = updatedItems[index].amount - 1;
+    }
 
     console.log(updatedItems);
     console.log(updatedTotalAmount);
