@@ -1,26 +1,13 @@
-import { useState } from 'react';
 import classes from './Input.module.css';
+import React from 'react';
 
-const Input = (props) => {
-  const [inputValue, setInputValue] = useState(0);
-
-  const inputChangeHandler = (e) => {
-    console.log(e.target.value);
-
-    setInputValue(e.target.value);
-    // e.target.value =
-  };
-
+const Input = React.forwardRef((props, ref) => {
   return (
     <div className={classes.input}>
       <label htmlFor={props.input.id}>{props.label}</label>
-      <input
-        {...props.input}
-        onChange={inputChangeHandler}
-        value={inputValue}
-      />
+      <input {...props.input} ref={ref} />
     </div>
   );
-};
+});
 
 export default Input;

@@ -5,8 +5,6 @@ import { useContext } from 'react';
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
 
-  console.log(cartCtx);
-
   const cartItems = (
     <ul>
       {cartCtx.items.map((item) => {
