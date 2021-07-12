@@ -2,67 +2,96 @@ import classes from './Checkout.module.css';
 import useInput from '../../hooks/use-input';
 
 const Checkout = (props) => {
-  const { value: enteredName, valueChangeHandler: nameChangeHandler } =
-    useInput();
+  const {
+    value: enteredName,
+    inputChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    inputClasses: nameInputClasses,
+  } = useInput((value) => value.trim() !== '');
 
-  const { value: enteredStreet, valueChangeHandler: streetChangeHandler } =
-    useInput();
+  const {
+    value: enteredStreet,
+    inputChangeHandler: streetChangeHandler,
+    inputBlurHandler: streetBlurHandler,
+    inputClasses: streetInputClasses,
+  } = useInput((value) => value.trim() !== '');
 
   const {
     value: enteredPostalCode,
-    valueChangeHandler: postalCodeChangeHandler,
-  } = useInput();
+    inputChangeHandler: postalCodeChangeHandler,
+    inputBlurHandler: postalCodeBlurHandler,
+    inputClasses: postalCodeInputClasses,
+  } = useInput((value) => value.trim() !== '');
 
-  const { value: enteredCity, valueChangeHandler: cityChangeHandler } =
-    useInput();
+  const {
+    value: enteredCity,
+    inputChangeHandler: cityChangeHandler,
+    inputBlurHandler: cityBlurHandler,
+    inputClasses: cityInputClasses,
+  } = useInput((value) => value.trim() !== '');
 
   const confirmHandler = (event) => {
     event.preventDefault();
   };
 
+  let formIsValid = false;
+
+  if (enteredName) formIsValid = true;
+
+  //   const nameInputClasses = [classes.control];
+  //   if (nameHasError) nameInputClasses.push(classes.invalid);
+
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={classes.control}>
+      <div className={nameInputClasses.join(' ')}>
         <label htmlFor="name">Your name</label>
         <input
           type="text"
           id="name"
           onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
           value={enteredName}
         />
       </div>
-      <div className={classes.control}>
+      <div className={streetInputClasses.join(' ')}>
         <label htmlFor="Street">Street</label>
         <input
           type="text"
           id="Street"
           onChange={streetChangeHandler}
+          onBlur={streetBlurHandler}
           value={enteredStreet}
         />
       </div>
-      <div className={classes.control}>
+      <div className={postalCodeInputClasses.join(' ')}>
         <label htmlFor="postal">Postal Code</label>
         <input
           type="text"
           id="postal"
           onChange={postalCodeChangeHandler}
+          onBlur={postalCodeBlurHandler}
           value={enteredPostalCode}
         />
       </div>
-      <div className={classes.control}>
+      <div className={cityInputClasses.join(' ')}>
         <label htmlFor="city">City</label>
         <input
           type="text"
           id="city"
           onChange={cityChangeHandler}
+          onBlur={cityBlurHandler}
           value={enteredCity}
         />
       </div>
 
-      <button type="button" onClick={props.onCancel}>
-        Cancel
-      </button>
-      <button>Confirm</button>
+      <div className={classes.actions}>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+        <button className={classes.submit} disabled={!formIsValid}>
+          Confirm
+        </button>
+      </div>
     </form>
   );
 };
