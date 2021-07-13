@@ -1,11 +1,14 @@
 import Modal from '../UI/Modal';
 import classes from './Cart.module.css';
 import CartContext from '../../store/cart-context';
-import { useContext, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import CartItem from './CartItem';
 import Checkout from './Checkout';
 
 const Cart = (props) => {
+  const [sendingData, setSendingData] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -17,6 +20,25 @@ const Cart = (props) => {
   };
   const cartItemRemoveHandler = (id) => {
     cartCtx.removeItem(id);
+  };
+
+  const submitOrderHandler = async (user) => {
+    setSendingData(true);
+    const res = await fetch(
+      `https://react-burger-builder-a797e-default-rtdb.firebaseio.com/orders.json`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ user, orderedItems: cartCtx.items }),
+      }
+    );
+
+    if (!res.ok) return;
+
+    setSendingData(false);
+    setIsSubmitted(true);
   };
 
   const cartItems = (
@@ -57,17 +79,24 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onCloseCart={props.onCloseCart}>
+  let cart = (
+    <Fragment>
       <div className={classes['cart-items']}>{cartItems}</div>
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onCloseCart} />}
+      {isCheckout && (
+        <Checkout onCancel={props.onCloseCart} submit={submitOrderHandler} />
+      )}
       {!isCheckout && modalActions}
-    </Modal>
+    </Fragment>
   );
+
+  if (sendingData) cart = 'Sending Order';
+  if (isSubmitted) cart = 'Successfully sent order';
+
+  return <Modal onCloseCart={props.onCloseCart}>{cart}</Modal>;
 };
 
 export default Cart;

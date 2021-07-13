@@ -30,8 +30,16 @@ const Checkout = (props) => {
     inputClasses: cityInputClasses,
   } = useInput((value) => value.trim() !== '');
 
-  const confirmHandler = (event) => {
+  const confirmHandler = async (event) => {
     event.preventDefault();
+
+    props.submit({
+      enteredName,
+      enteredCity,
+      enteredPostalCode,
+      enteredStreet,
+    });
+    // await fetch(``)
   };
 
   let formIsValid = false;
