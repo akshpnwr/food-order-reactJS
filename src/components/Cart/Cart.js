@@ -93,8 +93,18 @@ const Cart = (props) => {
     </Fragment>
   );
 
-  if (sendingData) cart = 'Sending Order';
-  if (isSubmitted) cart = 'Successfully sent order';
+  if (sendingData) cart = <p>Sending Order</p>;
+  if (isSubmitted)
+    cart = (
+      <Fragment>
+        <p>Successfully sent order</p>
+        <div className={classes.actions}>
+          <button className={classes.button} onClick={props.onCloseCart}>
+            Close
+          </button>
+        </div>
+      </Fragment>
+    );
 
   return <Modal onCloseCart={props.onCloseCart}>{cart}</Modal>;
 };
