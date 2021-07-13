@@ -38,6 +38,7 @@ const Cart = (props) => {
     if (!res.ok) return;
 
     setSendingData(false);
+    cartCtx.clearCart();
     setIsSubmitted(true);
   };
 
